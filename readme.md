@@ -3,6 +3,7 @@
 ## Example Execution:
 ### Server
 ---
+```
 Server Waiting
 ->INIT STATE<-
 Flight    |Status    |Time      
@@ -51,7 +52,7 @@ HZ205     |DEPARTING |12:03
           |          |          
 CX183     |EN ROUTE  |12:31     
           |          |          
-
+```
 
 ### Clients 
 ---
