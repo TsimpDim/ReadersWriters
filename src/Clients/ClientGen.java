@@ -1,35 +1,53 @@
 package Clients;
-import java.io.IOException;
+
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ClientGen{
-   private static final String HOST = "localhost";
-   private static final int PORT = 1234;
-   private static String[] flightCodes = {"HZ205", "CX183", "VL001", "WD623"};
-   private static int id = 0;
-   
-   public static void main(String[] args) throws IOException, ClassNotFoundException {
+
+   public static void main(String[] args){
 	   
-	   int _READERS = 0;
-	   int _WRITERS = 0;
-	   
-	   if(args.length != 2) {
+        int _READERS = 0;
+        int _WRITERS = 0;
+        Client[] clients;
+
+        if(args.length != 2) {
            System.out.println("Usage: <amount of readers> <amount of writers>");
            System.exit(1);
-       }
-       try{
+        }
+        try{
            _READERS = Integer.parseInt(args[0]);
            _WRITERS = Integer.parseInt(args[1]);
-       }catch(NumberFormatException e){
+        }catch(NumberFormatException e){
            System.out.println("Invalid argument format.");
            System.exit(1);
-       }
-       
-	   for(int i = 0; i < _READERS; i++)
-		   new ClientReader().start();
-	   
-	   for(int j = 0; j < _WRITERS; j++)
-		   new ClientWriter().start();
+        }
 
+        clients = new Client[_READERS + _WRITERS];
+        for(int i = 0; i < _READERS; i++)
+           clients[i] = new ClientReader();
+
+        for(int j = _READERS; j < _WRITERS + _READERS; j++)
+           clients[j] = new ClientWriter();
+
+        shuffleArray(clients);
+
+        for(Client c : clients)
+            c.start();
    }
 
+    // https://stackoverflow.com/a/1520212
+    static void shuffleArray(Client[] ar){
+        // If running on Java 6 or older, use `new Random()` on RHS here
+        Random rnd = ThreadLocalRandom.current();
+        for (int i = ar.length - 1; i > 0; i--)
+        {
+            int index = rnd.nextInt(i + 1);
+            // Simple swap
+            Client a = ar[index];
+            ar[index] = ar[i];
+            ar[i] = a;
+        }
+    }
 }
+

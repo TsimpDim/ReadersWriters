@@ -15,8 +15,9 @@ public class ClientWriter extends Client{
 
 	@Override
 	protected Request getRequest() {
+		int safeRnd = new Random().nextInt(flightCodes.length - 1);
 		int rnd = new Random().nextInt(flightCodes.length);
-		return new Request(flightCodes[rnd], statuses[rnd], times[rnd]);
+		return new Request(flightCodes[rnd], statuses[safeRnd], times[safeRnd]);
 	} 
 
 }

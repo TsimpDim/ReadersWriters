@@ -14,9 +14,10 @@ public class Server {
 		Socket pipe;
 		ObjectInputStream serverInputStream;
 		ObjectOutputStream serverOutputStream;
-		System.out.println("Server Waiting");
-		ServerProtocol serverProt = new ServerProtocol();
 
+		System.out.println("Server Waiting");
+
+		ServerProtocol serverProt = new ServerProtocol();
 		while(true){
 			pipe = socketConnection.accept();
 			serverInputStream = new ObjectInputStream(pipe.getInputStream());

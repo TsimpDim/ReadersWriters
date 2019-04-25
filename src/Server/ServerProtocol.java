@@ -41,7 +41,7 @@ public class ServerProtocol implements Serializable{
 		flightBoard.put("VL001", flightVL001);
 		flightBoard.put("WD623", flightWD623);
 		
-		System.out.println("->INIT STATE<-");
+		System.out.println("[INIT STATE]");
 		printBoard();
 	}
 	
@@ -59,6 +59,11 @@ public class ServerProtocol implements Serializable{
 			}
 		// If WRITE request
 		}else {
+			// Make WRITE requests artificially "expensive"
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {}
+
 			// And request is valid (flight code exists)
 			if(flightBoard.containsKey(req.getFlightCode())) {
 				String flightCode = req.getFlightCode();

@@ -9,7 +9,7 @@ public class Reply implements Serializable {
 	   
 	public Reply(){
 		code = "";
-		row = new HashMap<String, String>();
+		row = new HashMap<>();
 	}
 	
 	public String getCode() {
